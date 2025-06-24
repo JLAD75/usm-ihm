@@ -115,7 +115,7 @@ export const useAppStore = create<AppState & {
         });
       },
       async fetchProjects() {
-        const res = await fetch(`${API_BASE_URL}/projects`);
+        const res = await fetch(`${API_BASE_URL}/projects`, { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           set({ projects: data });
@@ -130,6 +130,7 @@ export const useAppStore = create<AppState & {
 
       async createProject(name) {
         const res = await fetch(`${API_BASE_URL}/projects`, {
+		  credentials: 'include',		
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, settings: { projectStartDate: new Date(), workdays: { monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: false, sunday: false }, holidays: [] } })
@@ -143,7 +144,7 @@ export const useAppStore = create<AppState & {
       },
 
       async deleteProject(id) {
-        await fetch(`${API_BASE_URL}/projects/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/projects/${id}`, { method: 'DELETE', credentials: 'include' });
         await get().fetchProjects();
         // Si le projet courant est supprimé, sélectionner le premier projet restant (ou null)
         const projects = get().projects;
@@ -159,6 +160,7 @@ export const useAppStore = create<AppState & {
 
       async renameProject(id, name) {
         await fetch(`${API_BASE_URL}/projects/${id}`, {
+		  credentials: 'include',
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name })
@@ -172,13 +174,13 @@ export const useAppStore = create<AppState & {
 
       async loadUserStories(projectId) {
         // Charger settings
-        const resProject = await fetch(`${API_BASE_URL}/projects/${projectId}`);
+        const resProject = await fetch(`${API_BASE_URL}/projects/${projectId}`, { credentials: 'include' });
         if (resProject.ok) {
           const project = await resProject.json();
           set({ settings: project.settings });
         }
         // Charger user stories
-        const resStories = await fetch(`${API_BASE_URL}/projects/${projectId}/userstories`);
+        const resStories = await fetch(`${API_BASE_URL}/projects/${projectId}/userstories`, { credentials: 'include' });
         if (resStories.ok) {
           const stories = await resStories.json();
           // Normalisation des AC : toujours un array d'objets {label: string, ...}
@@ -203,6 +205,7 @@ export const useAppStore = create<AppState & {
         if (!projectId) return;
         const order = userStories.length;
         await fetch(`${API_BASE_URL}/projects/${projectId}/userstories`, {
+		  credentials: 'include',
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...userStory, order, projectId })
@@ -222,6 +225,7 @@ export const useAppStore = create<AppState & {
           acceptanceCriteria: userStory.acceptanceCriteria !== undefined ? userStory.acceptanceCriteria : current.acceptanceCriteria || [],
         };
         await fetch(`${API_BASE_URL}/projects/${projectId}/userstories/${id}`, {
+		  credentials: 'include',
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(merged)
@@ -236,7 +240,7 @@ export const useAppStore = create<AppState & {
         // Recherche par projectId + id (pour robustesse, même si l'API prend déjà les deux)
         const current = userStories.find(s => s.id === id && s.projectId === projectId);
         if (!current) return;
-        await fetch(`${API_BASE_URL}/projects/${projectId}/userstories/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/projects/${projectId}/userstories/${id}`, { method: 'DELETE', credentials: 'include' });
         await loadUserStories(projectId);
       },
       
@@ -272,6 +276,7 @@ export const useAppStore = create<AppState & {
 
       async syncUserStories() {
         await fetch(`${API_BASE_URL}/userstories`, {
+		  credentials: 'include',
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(get().userStories),
@@ -286,6 +291,7 @@ export const useAppStore = create<AppState & {
         const project = projects.find(p => p.id === projectId);
         const name = project ? project.name : '';
         await fetch(`${API_BASE_URL}/projects/${projectId}`, {
+		  credentials: 'include',
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, settings: newSettings })
@@ -378,6 +384,7 @@ export const useAppStore = create<AppState & {
 
       importData: async (jsonData: string) => {
         const res = await fetch(`${API_BASE_URL}/projects/import`, {
+		  credentials: 'include',
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: jsonData
