@@ -19,7 +19,7 @@ export const useAuthStore = create<AuthState>(() => ({
   user: null,
   async fetchUser() {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/user`, {
+      const res = await fetch(`${API_BASE_URL}/user`, {
         credentials: "include",
       });
       const contentType = res.headers.get("content-type");
