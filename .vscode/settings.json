@@ -1,0 +1,73 @@
+{
+  "cSpell.words": [
+    "friday",
+    "headlessui",
+    "jladmin",
+    "modelcontextprotocol",
+    "monday",
+    "onsessioninitialized",
+    "openai",
+    "resave",
+    "saturday",
+    "Streamable",
+    "sunday",
+    "thursday",
+    "tuesday",
+    "userstories",
+    "wednesday"
+  ],
+  "piny.project_settings": {
+    "open-pages": ["pinyfakepage.html"],
+    "urls": {
+      "pinyfakepage.html": {
+        "open-page-views": [
+          {
+            "w": 1044,
+            "h": 0
+          }
+        ]
+      }
+    },
+    "tw-external-config": {},
+    "source-folders": null,
+    "preview-url": "http://localhost:5173",
+    "recent-classes": [
+      "8",
+      "4",
+      "3",
+      "y",
+      " ",
+      "6",
+      "5",
+      "/",
+      "1",
+      "t",
+      "x",
+      "2",
+      "m",
+      "w",
+      "s",
+      "!",
+      "u",
+      "l",
+      "p",
+      "k",
+      "c",
+      "a",
+      "0",
+      "9",
+      "d",
+      "n",
+      "i",
+      "-",
+      "g",
+      "b",
+      ":",
+      "r",
+      "e",
+      "v",
+      "o",
+      "h"
+    ]
+  }
+}

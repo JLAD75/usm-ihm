@@ -1,0 +1,37 @@
+/* UserStoriesTable styles extracted from inline <style> in UserStoriesTable.tsx */
+
+.no-row-border {
+  border-bottom: none !important;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.us-compact-row, .us-compact-row > td, .us-compact-row > th {
+  height: 3rem !important;
+  max-height: 3rem !important;
+  min-height: 3rem !important;
+  overflow: hidden !important;
+  vertical-align: middle !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: 1.2 !important;
+  font-size: 0.95em !important;
+}
+.us-compact-row * {
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  overflow: hidden !important;
+  font-size: 0.95em !important;
+}

@@ -1,0 +1,298 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@layer base {
+  button, [role="button"] {
+    cursor: pointer;
+  }
+}
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 240, 240, 240;
+  --background-end-rgb: 255, 255, 255;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 30, 30, 30;
+  --background-end-rgb: 15, 15, 15;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Animation pour le drag and drop */
+.dragging {
+  opacity: 0.8;
+  transform: scale(1.02);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+}
+
+.drop-indicator {
+  height: 2px;
+  background-color: #4f46e5;
+  margin: 4px 0;
+  border-radius: 1px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Styles pour le tableau */
+.user-story-table th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Styles pour le Gantt */
+.gantt-container {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.gantt-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gantt-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.gantt-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.gantt-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Scrollbar discrète et moderne pour tous les navigateurs */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd #f5f5f5;
+}
+.custom-scrollbar:hover {
+  scrollbar-color: #888 #ededed;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #bdbdbd;
+  border-radius: 6px;
+  min-height: 24px;
+  transition: background 0.2s;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+/* Mode sombre */
+.dark .custom-scrollbar {
+  scrollbar-color: #444 #23272f;
+}
+.dark .custom-scrollbar:hover {
+  scrollbar-color: #666 #23272f;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #444;
+}
+.dark .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #666;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #23272f;
+}
+
+/* Transitions douces pour le thème */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+.no-select {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Mobile utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Touch targets */
+@media (hover: none) and (pointer: coarse) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .touch-target-small {
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* Disable drag selection on mobile during pan */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.animate-fadein {
+  animation: fadein 0.18s cubic-bezier(0.4,0,0.2,1);
+}
+
+@keyframes fadeout {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: scale(0.96) translateY(12px); }
+}
+.animate-fadeout {
+  animation: fadeout 0.16s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+@keyframes bento-bounce {
+  0% { opacity: 0; transform: scale(0.98) translateY(10px); }
+  60% { opacity: 1; transform: scale(1.01) translateY(-2px); }
+  80% { transform: scale(0.99) translateY(1px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.bento-bounce {
+  animation: bento-bounce 0.22s cubic-bezier(0.42,1.6,0.58,1) both;
+}
+
+/* Styles pour les tables markdown dans le chat IA (déplacés depuis App.css) */
+.prose table {
+  @apply w-full border-collapse rounded-lg overflow-hidden text-xs md:text-sm bg-white dark:bg-gray-800 shadow-sm;
+  margin: 1.5em 0;
+}
+
+.prose thead {
+  @apply bg-indigo-100 dark:bg-indigo-900;
+}
+
+.prose th,
+.prose td {
+  @apply border border-gray-300 dark:border-gray-700 px-3 py-2 text-left align-top;
+}
+
+.prose th {
+  @apply font-semibold text-indigo-700 dark:text-indigo-200;
+}
+
+.prose tr:nth-child(even) td {
+  @apply bg-gray-50 dark:bg-gray-900;
+}
+
+.prose tr:hover td {
+  @apply bg-indigo-50 dark:bg-indigo-800 transition;
+}
+
+.prose td {
+  @apply text-gray-800 dark:text-gray-100;
+}
+
+/* Styles pour les indicateurs de commentaire */
+.comment-indicator {
+  animation: subtle-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes subtle-glow {
+  from {
+    box-shadow: 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  to {
+    box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+  }
+}
+
+.comment-badge {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* Prévention du scroll horizontal */
+html,
+body {
+  overflow-x: hidden;
+}
+
+.container,
+.main-container {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Amélioration de la ResponsiveCard pour mobile */
+@media (max-width: 768px) {
+  .mobile-optimized {
+    padding: 0.75rem;
+    margin: 0.5rem;
+  }
+
+  .mobile-optimized .grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .mobile-form {
+    padding: 1rem;
+  }
+
+  .mobile-form .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-form input,
+  .mobile-form textarea,
+  .mobile-form select {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+}
