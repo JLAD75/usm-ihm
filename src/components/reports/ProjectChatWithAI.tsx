@@ -10,6 +10,7 @@ import remarkEmoji from "remark-emoji";
 import remarkGfm from "remark-gfm";
 import { useAppStore } from "../../store/appStore";
 import { useAuthStore } from "../../store/authStore";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 const ProjectChatWithAI: React.FC = () => {
   const { projects, projectId } = useAppStore();
@@ -60,7 +61,7 @@ const ProjectChatWithAI: React.FC = () => {
     const newMessages = [systemMsg, ...truncatedHistory];
     setMessages(newMessages);
     try {
-      const response = await fetch("/api/ai-chat", {
+      const response = await fetch(`${API_BASE_URL}/ai-chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

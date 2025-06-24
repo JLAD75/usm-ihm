@@ -14,6 +14,7 @@ export interface Project {
   updatedAt: string;
   accessLevel: 'read' | 'write' | 'owner';
 }
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 // Définition des types pour le store
 interface AppState {
@@ -99,14 +100,14 @@ export const useAppStore = create<AppState & {
         if (persistApi) get().saveSelectedProjectId(id);
       },
       async fetchSelectedProjectId() {
-        const res = await fetch('/api/user/selected-project', { credentials: 'include' });
+        const res = await fetch(`${API_BASE_URL}/user/selected-project`, { credentials: 'include' });
         if (res.ok) {
           const data = await res.json();
           if (data.selectedProjectId) set({ projectId: data.selectedProjectId });
         }
       },
       async saveSelectedProjectId(id) {
-        await fetch('/api/user/selected-project', {
+        await fetch(`${API_BASE_URL}/user/selected-project`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -114,7 +115,7 @@ export const useAppStore = create<AppState & {
         });
       },
       async fetchProjects() {
-        const res = await fetch('/api/projects');
+        const res = await fetch(`${API_BASE_URL}/projects`);
         if (res.ok) {
           const data = await res.json();
           set({ projects: data });
@@ -128,7 +129,7 @@ export const useAppStore = create<AppState & {
       },
 
       async createProject(name) {
-        const res = await fetch('/api/projects', {
+        const res = await fetch(`${API_BASE_URL}/projects`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, settings: { projectStartDate: new Date(), workdays: { monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: false, sunday: false }, holidays: [] } })
@@ -142,7 +143,7 @@ export const useAppStore = create<AppState & {
       },
 
       async deleteProject(id) {
-        await fetch(`/api/projects/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/projects/${id}`, { method: 'DELETE' });
         await get().fetchProjects();
         // Si le projet courant est supprimé, sélectionner le premier projet restant (ou null)
         const projects = get().projects;
@@ -157,7 +158,7 @@ export const useAppStore = create<AppState & {
       },
 
       async renameProject(id, name) {
-        await fetch(`/api/projects/${id}`, {
+        await fetch(`${API_BASE_URL}/projects/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name })
@@ -171,13 +172,13 @@ export const useAppStore = create<AppState & {
 
       async loadUserStories(projectId) {
         // Charger settings
-        const resProject = await fetch(`/api/projects/${projectId}`);
+        const resProject = await fetch(`${API_BASE_URL}/projects/${projectId}`);
         if (resProject.ok) {
           const project = await resProject.json();
           set({ settings: project.settings });
         }
         // Charger user stories
-        const resStories = await fetch(`/api/projects/${projectId}/userstories`);
+        const resStories = await fetch(`${API_BASE_URL}/projects/${projectId}/userstories`);
         if (resStories.ok) {
           const stories = await resStories.json();
           // Normalisation des AC : toujours un array d'objets {label: string, ...}
@@ -201,7 +202,7 @@ export const useAppStore = create<AppState & {
         const { projectId, loadUserStories, userStories } = get();
         if (!projectId) return;
         const order = userStories.length;
-        await fetch(`/api/projects/${projectId}/userstories`, {
+        await fetch(`${API_BASE_URL}/projects/${projectId}/userstories`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...userStory, order, projectId })
@@ -220,7 +221,7 @@ export const useAppStore = create<AppState & {
           order: current.order,
           acceptanceCriteria: userStory.acceptanceCriteria !== undefined ? userStory.acceptanceCriteria : current.acceptanceCriteria || [],
         };
-        await fetch(`/api/projects/${projectId}/userstories/${id}`, {
+        await fetch(`${API_BASE_URL}/projects/${projectId}/userstories/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(merged)
@@ -235,7 +236,7 @@ export const useAppStore = create<AppState & {
         // Recherche par projectId + id (pour robustesse, même si l'API prend déjà les deux)
         const current = userStories.find(s => s.id === id && s.projectId === projectId);
         if (!current) return;
-        await fetch(`/api/projects/${projectId}/userstories/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/projects/${projectId}/userstories/${id}`, { method: 'DELETE' });
         await loadUserStories(projectId);
       },
       
@@ -270,7 +271,7 @@ export const useAppStore = create<AppState & {
       },
 
       async syncUserStories() {
-        await fetch('/api/userstories', {
+        await fetch(`${API_BASE_URL}/userstories`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(get().userStories),
@@ -284,7 +285,7 @@ export const useAppStore = create<AppState & {
         // Récupérer le nom du projet courant
         const project = projects.find(p => p.id === projectId);
         const name = project ? project.name : '';
-        await fetch(`/api/projects/${projectId}`, {
+        await fetch(`${API_BASE_URL}/projects/${projectId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, settings: newSettings })
@@ -342,7 +343,7 @@ export const useAppStore = create<AppState & {
       
       fetchUserTheme: async () => {
         try {
-          const res = await fetch('/api/user/theme', { credentials: 'include' });
+          const res = await fetch(`${API_BASE_URL}/user/theme`, { credentials: 'include' });
           if (res.ok) {
             const data = await res.json();
             if (data.theme) {
@@ -356,7 +357,7 @@ export const useAppStore = create<AppState & {
       },
       saveUserTheme: async (theme: 'light' | 'dark' | 'system') => {
         try {
-          await fetch('/api/user/theme', {
+          await fetch(`${API_BASE_URL}/user/theme`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -369,14 +370,14 @@ export const useAppStore = create<AppState & {
       exportData: async () => {
         const { projectId } = get();
         if (!projectId) throw new Error('Aucun projet sélectionné');
-        const res = await fetch(`/api/projects/${projectId}/export`);
+        const res = await fetch(`${API_BASE_URL}/projects/${projectId}/export`);
         if (!res.ok) throw new Error('Erreur lors de l’export');
         const data = await res.json();
         return JSON.stringify(data, null, 2);
       },
 
       importData: async (jsonData: string) => {
-        const res = await fetch('/api/projects/import', {
+        const res = await fetch(`${API_BASE_URL}/projects/import`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: jsonData
