@@ -80,7 +80,6 @@ const ProjectChatWithAI: React.FC = () => {
           ],
         }),
       });
-	  console.log("Response status:", response.status);
 	  if (!response.ok) {
 		const errorText = await response.text();
 		throw new Error(
@@ -88,13 +87,14 @@ const ProjectChatWithAI: React.FC = () => {
 		);
 	  }
       if (!response.body) throw new Error("Pas de flux de réponse");
-	  console.log("Response body:", response.body);
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let done = false;
       let buffer = "";
       while (!done) {
+		console.log("Lecture du flux de réponse...");
         const { value, done: doneReading } = await reader.read();
+		console.log("Valeur lue :", value);
         done = doneReading;
         if (value) {
           buffer += decoder.decode(value, { stream: true });
