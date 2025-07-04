@@ -94,10 +94,8 @@ const ProjectChatWithAI: React.FC = () => {
       while (!done) {
 		console.log("Lecture du flux de réponse...");
         const { value, done: doneReading } = await reader.read();
-		if(value===undefined) {done = false;}
 		console.log("Valeur lue :", value);
 		console.log("Lecture terminée :", doneReading);
-        //done = doneReading;
         if (value) {
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split(/\n\n/);
