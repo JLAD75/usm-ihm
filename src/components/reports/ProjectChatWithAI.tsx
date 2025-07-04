@@ -80,7 +80,15 @@ const ProjectChatWithAI: React.FC = () => {
           ],
         }),
       });
+	  console.log("Response status:", response.status);
+	  if (!response.ok) {
+		const errorText = await response.text();
+		throw new Error(
+		  `Erreur lors de la requête à l'API : ${response.status} - ${errorText}`
+		);
+	  }
       if (!response.body) throw new Error("Pas de flux de réponse");
+	  console.log("Response body:", response.body);
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let done = false;
