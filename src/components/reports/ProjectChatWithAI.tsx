@@ -103,6 +103,7 @@ const ProjectChatWithAI: React.FC = () => {
           for (const line of lines) {
             if (line.startsWith("data: ")) {
               const json = line.replace("data: ", "").trim();
+			  console.log("Chunk reçu :", json);
               if (json && json !== "[DONE]") {
                 try {
                   const chunk = JSON.parse(json);
