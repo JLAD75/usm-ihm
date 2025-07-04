@@ -73,7 +73,7 @@ const ProjectChatWithAI: React.FC = () => {
             {
               type: "mcp",
               server_label: "jladmin",
-              server_url: "https://jladmin.fr/mcp",
+              server_url: "https://api.jladmin.fr/mcp",
               allowed_tools: ["list_projects", "get_project_user_stories"],
               require_approval: "never",
             },
