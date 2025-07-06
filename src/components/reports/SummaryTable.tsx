@@ -176,7 +176,7 @@ const SummaryTable: React.FC = () => {
   };
   if (!summaryData) {
     return (
-      <div className="bg-white dark:bg-gray-800 p-4 md:p-6 rounded-lg shadow-lg">
+      <div className="bg-white dark:bg-gray-800 p-0 md:p-2 rounded-lg shadow-lg">
         <div className="flex items-center gap-3 mb-4">
           <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">
@@ -306,7 +306,7 @@ const SummaryTable: React.FC = () => {
   // Affichage desktop avec tableau
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-      <div className="p-4 md:p-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-0 md:p-2 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <BarChart3 className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
@@ -324,7 +324,7 @@ const SummaryTable: React.FC = () => {
         </div>
       </div>
 
-      <div className="p-4 md:p-6">
+      <div className="p-0 md:p-2">
         <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-800/50">

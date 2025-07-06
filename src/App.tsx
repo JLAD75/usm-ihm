@@ -230,7 +230,7 @@ function App() {
     }
   }, [projectId, projects]);
 
-  // Loader minimum 2s
+  // Loader minimum 500ms
   useEffect(() => {
     if (showLoading && !showLoader) {
       setShowLoader(true);
@@ -238,8 +238,8 @@ function App() {
     }
     if (!showLoading && showLoader) {
       const elapsed = loaderStart ? Date.now() - loaderStart : 0;
-      if (elapsed < 2000) {
-        const timeout = setTimeout(() => setShowLoader(false), 2000 - elapsed);
+      if (elapsed < 500) {
+        const timeout = setTimeout(() => setShowLoader(false), 500 - elapsed);
         return () => clearTimeout(timeout);
       } else {
         setShowLoader(false);
@@ -326,12 +326,12 @@ function App() {
 
       <footer
         className={`bg-white dark:bg-gray-800 shadow-inner mt-1 w-full ${
-          isMobile ? "py-2" : "py-3"
+          isMobile ? "py-0" : "py-1"
         }`}
       >
         <div
           className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-            isMobile ? "py-1" : "py-3"
+            isMobile ? "py-0" : "py-1"
           }`}
         >
           <p

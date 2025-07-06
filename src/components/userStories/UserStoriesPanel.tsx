@@ -32,7 +32,17 @@ const UserStoriesPanel: React.FC<{
 
   // Contrôle externe du formulaire
   const isFormVisible =
-    externalShowForm !== undefined ? externalShowForm : showForm;
+    externalShowForm !== undefined && !editId ? externalShowForm : showForm;
+  
+  // Debug: log de l'état du formulaire (temporaire)
+  React.useEffect(() => {
+    console.log("🔧 État du formulaire:", { 
+      showForm, 
+      externalShowForm, 
+      isFormVisible, 
+      editId 
+    });
+  }, [showForm, externalShowForm, isFormVisible, editId]);
 
   // Sauvegarde du mode compact dans le localStorage
   React.useEffect(() => {
@@ -57,8 +67,11 @@ const UserStoriesPanel: React.FC<{
   };
 
   const handleEditClick = (id: string) => {
+    console.log("🔧 handleEditClick appelé avec id:", id);
     setEditId(id);
+    // Pour l'édition, utiliser toujours setShowForm pour éviter les conflits
     setShowForm(true);
+    console.log("🔧 État après setEditId et setShowForm:", { editId: id, showForm: true });
   };
 
   const handleCloseForm = () => {
@@ -208,12 +221,29 @@ const UserStoriesPanel: React.FC<{
       )}
 
       {/* Modale du formulaire */}
+      {(() => {
+        console.log("🔧 Vérification condition de rendu:", { 
+          isFormVisible, 
+          showForm, 
+          externalShowForm, 
+          editId,
+          condition: isFormVisible 
+        });
+        return null;
+      })()}
       {isFormVisible && (
-        <UserStoryForm
-          editId={editId || undefined}
-          onClose={handleCloseForm}
-          isModal={true}
-        />
+        <>
+          {(() => {
+            console.log("🔧 Rendu du formulaire avec:", { editId, isFormVisible });
+            return null;
+          })()}
+          <UserStoryForm
+            editId={editId || undefined}
+            onClose={handleCloseForm}
+            isModal={true}
+            key={`form-${editId || 'new'}`}
+          />
+        </>
       )}
     </div>
   );

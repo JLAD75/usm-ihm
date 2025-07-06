@@ -47,10 +47,12 @@ const UserStoryForm: React.FC<UserStoryFormProps> = ({
 
   // Charger les données si en mode édition
   useEffect(() => {
+    console.log("🔧 UserStoryForm useEffect - editId:", editId, "projectId:", projectId);
     if (editId) {
       const story = userStories.find(
         (s) => s.id === editId && s.projectId === projectId
       );
+      console.log("🔧 Story trouvée:", story);
       if (story) {
         setId(story.id ?? "");
         setEpic(story.epic ?? "");

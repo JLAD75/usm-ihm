@@ -636,7 +636,7 @@ const GanttChart: React.FC = () => {
 
           {/* Zoom Controls - Hide on mobile in list mode */}
           {(!isMobile || mobileViewMode === "timeline") && (
-            <div className="flex items-center justify-center space-x-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3 py-2">
+            <div className="flex items-center justify-center space-x-3 bg-gray-50 dark:bg-gray-700 rounded-lg px-3 py-0">
               <button
                 onClick={() => setZoom(Math.max(0.5, zoom - 0.1))}
                 className={cn(
@@ -782,8 +782,8 @@ const GanttChart: React.FC = () => {
             noSelect ? " no-select" : ""
           } custom-scrollbar`}
           style={{
-            maxHeight: "69vh",
-            minHeight: "69vh",
+            maxHeight: "68vh",
+            minHeight: "68vh",
             overflowY: "auto",
             cursor: "grab",
           }}

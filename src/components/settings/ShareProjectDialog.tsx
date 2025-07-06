@@ -29,12 +29,12 @@ const ShareProjectDialog: React.FC<{
     if (!open) return;
 
     // Charger la liste des accès existants
-    fetch(`${API_BASE_URL}/projects/${projectId}/access`)
+    fetch(`${API_BASE_URL}/projects/${projectId}/access`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : []))
       .then((data) => setAccessList(data));
 
     // Charger la liste de tous les utilisateurs
-    fetch(`${API_BASE_URL}/users`)
+    fetch(`${API_BASE_URL}/users`, { credentials: 'include' })
       .then((res) => (res.ok ? res.json() : []))
       .then((users: User[]) => {
         // Filtrer pour exclure l'utilisateur actuel
@@ -49,6 +49,7 @@ const ShareProjectDialog: React.FC<{
     await fetch(`${API_BASE_URL}/projects/${projectId}/access`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: 'include',
       body: JSON.stringify({
         targetUserId: newUserId.trim(),
         accessLevel: newLevel,
@@ -58,11 +59,11 @@ const ShareProjectDialog: React.FC<{
     setNewLevel("read");
 
     // Recharger les listes
-    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`);
+    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`, { credentials: 'include' });
     if (res.ok) setAccessList(await res.json());
 
     // Mettre à jour la liste des utilisateurs disponibles
-    const usersRes = await fetch(`${API_BASE_URL}/users`);
+    const usersRes = await fetch(`${API_BASE_URL}/users`, { credentials: 'include' });
     if (usersRes.ok) {
       const users = await usersRes.json();
       const filteredUsers = users.filter(
@@ -78,21 +79,23 @@ const ShareProjectDialog: React.FC<{
     await fetch(`${API_BASE_URL}/projects/${projectId}/access`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: 'include',
       body: JSON.stringify({ targetUserId: userId, accessLevel }),
     });
-    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`);
+    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`, { credentials: 'include' });
     if (res.ok) setAccessList(await res.json());
   };
 
   const handleRemove = async (userId: string) => {
     await fetch(`${API_BASE_URL}/projects/${projectId}/access/${userId}`, {
       method: "DELETE",
+      credentials: 'include',
     });
-    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`);
+    const res = await fetch(`${API_BASE_URL}/projects/${projectId}/access`, { credentials: 'include' });
     if (res.ok) setAccessList(await res.json());
 
     // Mettre à jour la liste des utilisateurs disponibles
-    const usersRes = await fetch(`${API_BASE_URL}/users`);
+    const usersRes = await fetch(`${API_BASE_URL}/users`, { credentials: 'include' });
     if (usersRes.ok) {
       const users = await usersRes.json();
       const filteredUsers = users.filter(

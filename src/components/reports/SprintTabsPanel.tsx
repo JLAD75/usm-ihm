@@ -35,7 +35,7 @@ const SprintTabsPanel: React.FC<SprintTabsPanelProps> = ({
   return (
     <div
       className={`bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-0 ${
-        isMobile ? "p-2" : "p-4 pt-1"
+        isMobile ? "p-2" : "p-3 pt-1"
       }`}
     >
       {/* Onglets - masqués sur mobile car on utilisera le FAB pour naviguer */}

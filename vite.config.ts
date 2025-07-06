@@ -12,12 +12,6 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    allowedHosts: ["jladmin.fr"],
-    hmr: {
-      host: "jladmin.fr",
-      protocol: "wss",
-      clientPort: 443,
-    },
     proxy: {
       "/api": {
         target: "http://localhost:3000",
@@ -25,6 +19,16 @@ export default defineConfig({
         rewrite: (path) => path,
       },
       "/auth": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+      "/user": {
+        target: "http://localhost:3000",
+        changeOrigin: true,
+        rewrite: (path) => path,
+      },
+      "/token": {
         target: "http://localhost:3000",
         changeOrigin: true,
         rewrite: (path) => path,

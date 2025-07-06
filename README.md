@@ -1,90 +1,182 @@
-# User Stories Manager
+# User Stories Manager (USM)
 
-User Stories Manager est une application web moderne permettant de gérer efficacement les user stories, sprints et rapports pour vos projets agiles.
+User Stories Manager est une application web moderne et complète pour la gestion agile de projets, permettant de gérer efficacement les user stories, sprints, rapports et collaboration d'équipe.
 
 ## ✨ Fonctionnalités principales
 
-- **Gestion des user stories** : Ajout, édition, suppression et visualisation des user stories.
-- **Gestion des sprints** : Organisation des user stories par sprint, suivi de l’avancement.
-- **Rapports & Tableaux** : Génération de rapports (tableaux de synthèse, Gantt, etc.) pour visualiser la progression.
-- **Paramétrage** : Configuration des jours ouvrés, jours fériés, thèmes, import/export des données.
-- **Partage de projet** : Gestion des droits d'accès pour inviter d'autres utilisateurs.
-- **Interface moderne** : UI réactive et agréable grâce à React, Tailwind CSS et des composants personnalisés.
+### 🎯 Gestion des User Stories
+- **CRUD complet** : Création, édition, suppression et visualisation des user stories
+- **Drag & Drop** : Réorganisation intuitive des user stories par glisser-déposer
+- **Critères d'acceptation** : Gestion des critères d'acceptation avec formatage
+- **Dépendances** : Gestion des dépendances entre user stories
+- **Commentaires** : Système de commentaires pour chaque user story
+- **Estimation** : Estimation en jours avec calcul automatique des dates
+
+### 📊 Rapports et Visualisations
+- **Tableau de bord** : Vue d'ensemble avec métriques clés
+- **Diagramme de Gantt** : Visualisation temporelle des user stories
+- **Calendrier des sprints** : Planification et suivi des sprints
+- **Tableaux de synthèse** : Rapports détaillés et exportables
+- **Vue Kanban** : Organisation visuelle par statuts
+
+### 🤖 Assistant IA Intégré
+- **Chat IA** : Assistant spécialisé en gestion de projet agile
+- **Outils MCP** : Intégration d'outils pour analyser et modifier les données
+- **Filtrage intelligent** : Recherche et filtrage avancé des user stories
+- **Modifications directes** : Modification des user stories via l'IA
+- **Métriques automatiques** : Calcul et analyse des métriques de projet
+
+### ⚙️ Configuration et Personnalisation
+- **Thèmes** : Mode clair/sombre et thème système
+- **Jours ouvrés** : Configuration des jours de travail
+- **Jours fériés** : Gestion des congés et jours fériés
+- **Import/Export** : Import/export Excel et JSON
+- **Partage de projet** : Gestion des droits d'accès utilisateurs
+
+### 🔐 Authentification et Sécurité
+- **OAuth Google** : Authentification sécurisée via Google
+- **Gestion des sessions** : Sessions persistantes et sécurisées
+- **Contrôle d'accès** : Droits d'accès par projet (lecture/écriture/propriétaire)
 
 ## 🛠️ Technologies utilisées
 
-- **React** (TypeScript) : Framework principal pour l’interface utilisateur.
-- **Vite** : Outil de build rapide pour le développement et la production.
-- **Tailwind CSS** : Framework CSS utilitaire pour un design moderne et personnalisable.
-- **PNPM** : Gestionnaire de paquets rapide et efficace.
+### Frontend
+- **React 18** avec TypeScript pour une interface moderne et type-safe
+- **Vite** pour un développement rapide et un build optimisé
+- **Tailwind CSS** pour un design responsive et personnalisable
+- **Zustand** pour la gestion d'état globale
+- **React Markdown** pour le rendu des réponses IA
+- **DND Kit** pour le drag & drop
+- **Date-fns** pour la manipulation des dates
 
-## 📦 Installation & Lancement
+### Backend
+- **Node.js** avec Express pour l'API REST
+- **SQLite** pour la persistance des données
+- **Passport.js** pour l'authentification OAuth
+- **JWT** pour la sécurisation des sessions
+- **CORS** configuré pour la sécurité
+
+### IA et Outils
+- **OpenAI GPT-4o-mini** pour l'assistant IA
+- **MCP (Model Context Protocol)** pour les outils d'analyse
+- **EventSource** pour le streaming des réponses IA
+
+## 📦 Installation et Configuration
 
 ### Prérequis
-- [Node.js](https://nodejs.org/) (v18 ou supérieur recommandé)
-- [PNPM](https://pnpm.io/) (si non installé : `npm install -g pnpm`)
+- [Node.js](https://nodejs.org/) (v18 ou supérieur)
+- [PNPM](https://pnpm.io/) (recommandé) ou npm
+- Compte Google pour l'authentification OAuth
 
-### Étapes d’installation
+### Installation
 
 1. **Cloner le dépôt**
-   ```powershell
+   ```bash
    git clone <url-du-repo>
-   cd userStoriesManager
+   cd usm-ihm
    ```
 
 2. **Installer les dépendances**
-   ```powershell
+   ```bash
    pnpm install
    ```
 
-3. **Configurer les variables d'environnement**
-   Créez un fichier `.env` à la racine contenant :
-   ```
-   GOOGLE_CLIENT_ID=VotreIdGoogle
-   GOOGLE_CLIENT_SECRET=VotreSecretGoogle
-   SESSION_SECRET=uneCleSecrete
-   PORT=3000
+3. **Configurer l'environnement**
+   Créez un fichier `.env` à la racine :
+   ```env
+   VITE_API_BASE_URL=http://localhost:3000
    ```
 
-4. **Lancer le serveur de développement**
-   ```powershell
+4. **Configurer l'API backend**
+   Voir la documentation du dossier `usm-api/` pour la configuration du backend.
+
+5. **Lancer le développement**
+   ```bash
    pnpm dev
-   ```
-   L’application sera accessible sur [http://localhost:5173](http://localhost:5173) (ou le port affiché dans le terminal).
-
-5. **Démarrer l'API Express**
-   ```powershell
-   pnpm start:server
    ```
 
 ### Build pour la production
-```powershell
+```bash
 pnpm build
 ```
-Les fichiers optimisés seront générés dans le dossier `dist/`.
 
 ## 📁 Structure du projet
 
-- `src/` : Code source principal
-  - `components/` : Composants React (UI, user stories, rapports, paramètres...)
-  - `hooks/` : Hooks personnalisés
-  - `lib/` : Fonctions utilitaires
-  - `store/` : Gestion d’état globale
-  - `types/` : Types TypeScript
-- `public/` : Fichiers statiques
-- `index.html` : Point d’entrée de l’application
-- `server/` : API Express et authentification
+```
+usm-ihm/
+├── src/
+│   ├── components/           # Composants React
+│   │   ├── app/             # Composants principaux (Header, Navigation, etc.)
+│   │   ├── kanban/          # Vue Kanban
+│   │   ├── reports/         # Rapports et visualisations
+│   │   ├── settings/        # Paramètres et configuration
+│   │   ├── ui/              # Composants UI réutilisables
+│   │   └── userStories/     # Gestion des user stories
+│   ├── hooks/               # Hooks personnalisés
+│   ├── lib/                 # Utilitaires et helpers
+│   ├── store/               # Gestion d'état (Zustand)
+│   └── types/               # Types TypeScript
+├── public/                  # Fichiers statiques
+├── docs/                    # Documentation utilisateur
+└── package.json
+```
 
-## 🤝 Contribuer
+## 🚀 Fonctionnalités avancées
 
-Les contributions sont les bienvenues ! N’hésitez pas à ouvrir une issue ou une pull request.
+### Assistant IA
+L'assistant IA intégré permet de :
+- Analyser les métriques du projet
+- Filtrer et rechercher les user stories
+- Modifier directement les user stories
+- Générer des rapports automatiques
+- Répondre aux questions sur le projet
 
-Un guide détaillé d'utilisation est disponible dans [docs/USAGE.md](docs/USAGE.md).
+### Outils MCP
+Les outils MCP permettent à l'IA de :
+- Récupérer les métriques du projet
+- Lister et filtrer les user stories
+- Créer, modifier et supprimer des user stories
+- Analyser les sprints et la progression
 
-## 📜 Licence
+### Gestion des accès
+- **Propriétaire** : Accès complet au projet
+- **Écriture** : Peut modifier les user stories
+- **Lecture** : Peut consulter le projet
 
-Ce projet est sous licence MIT.
+## 🔧 Développement
+
+### Scripts disponibles
+```bash
+pnpm dev          # Démarre le serveur de développement
+pnpm build        # Build pour la production
+pnpm preview      # Prévisualise le build de production
+pnpm test         # Lance les tests
+pnpm lint         # Vérifie le code avec ESLint
+```
+
+### Variables d'environnement
+- `VITE_API_BASE_URL` : URL de l'API backend
+- `VITE_GOOGLE_CLIENT_ID` : ID client Google OAuth (optionnel)
+
+## 📚 Documentation
+
+- [Guide d'utilisation](docs/USAGE.md) : Documentation complète pour les utilisateurs
+- [API Documentation](usm-api/README.md) : Documentation du backend
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Créez une branche pour votre fonctionnalité
+3. Committez vos changements
+4. Poussez vers la branche
+5. Ouvrez une Pull Request
+
+## 📄 Licence
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ---
 
-**Développé avec ❤️ pour la gestion agile !**
+**Développé avec ❤️ pour la gestion agile moderne !**

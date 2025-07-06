@@ -51,7 +51,7 @@ const ReportsPanel: React.FC<ReportsPanelProps> = ({
     <div className="space-y-0">
       {/* Onglets desktop uniquement */}
       {!isMobile && (
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-0">
           {" "}
           {tabs.map((tab) => (
             <button
