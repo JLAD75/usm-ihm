@@ -225,16 +225,10 @@ const ProjectChatWithAI: React.FC = () => {
               // Si finish_reason est présent, la réponse est terminée
               if (chunk.choices[0].finish_reason) {
                 // Détecter les modifications dans la réponse complète
-                console.log("🔍 Analyse de la réponse IA pour détecter les modifications");
-                console.log("📝 Contenu de la réponse:", aiMessage);
-                
                 if (aiMessage.includes("✅ Nouvelle user story créée") || 
                     aiMessage.includes("✏️ User story modifiée") || 
                     aiMessage.includes("🗑️ User story supprimée")) {
                   hasModifications = true;
-                  console.log("✅ Modification détectée dans la réponse IA");
-                } else {
-                  console.log("❌ Aucune modification détectée dans la réponse IA");
                 }
                 
                 clearTimeout(timeoutId); // Annuler le timeout
@@ -245,16 +239,12 @@ const ProjectChatWithAI: React.FC = () => {
                   // Utiliser une fonction async immédiatement invoquée
                   (async () => {
                     try {
-                      console.log("🔄 Détection de modification - début du rechargement automatique");
-                      
                       // Petit délai pour s'assurer que la modification est bien terminée côté serveur
                       await new Promise(resolveDelay => setTimeout(resolveDelay, 1000));
                       
                       // Recharger les projets et les user stories
                       await fetchProjects();
                       await loadUserStories(projectId as string);
-                      
-                      console.log("✅ Données rechargées automatiquement après modification IA");
                       
                       // Forcer un re-render global en émettant un événement personnalisé
                       window.dispatchEvent(new CustomEvent('userStoriesUpdated'));
@@ -263,8 +253,6 @@ const ProjectChatWithAI: React.FC = () => {
                       console.error("Erreur lors du rechargement automatique:", error);
                     }
                   })();
-                } else {
-                  console.log("ℹ️ Aucune modification détectée, pas de rechargement automatique");
                 }
                 
                 resolve();
@@ -368,10 +356,8 @@ const ProjectChatWithAI: React.FC = () => {
   // Fonction de rechargement manuel pour debug
   const handleManualReload = async () => {
     if (projectId) {
-      console.log("🔄 Rechargement manuel des données");
       await fetchProjects();
       await loadUserStories(projectId);
-      console.log("✅ Rechargement manuel terminé");
     }
   };
 
